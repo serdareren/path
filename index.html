@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Path Editor</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+  </head>
+
+  <body>
+
+    <style>
+      #fllscrn{position: absolute; top:0px; right:0px; width: 80px;height: 80px;background:url(icons.4ai-17a.png); z-index: 100; cursor:nwse-resize;} 
+      #fllscrn:hover{transform:scale(1.02);}             
+    </style>
+    <script>
+      function fullScreen() {
+        parent.toggleFullScreen();
+      }
+    </script>
+    <div id="container" >
+
+      <div class="menu" onclick="openMenu()"  ></div>
+      <fieldset id="edit" style="display: block;">
+        <div id="close" onclick="closeMenu()"></div>
+        <button type="button" class="button active" id="addMode" style="background-position: -92px 0; margin-top: 101px;"></button>
+        <button type="button" class="button" id="selectMode" style="background-position: -136px 0;margin-top: -3px;"></button>
+        <button type="button" class="button" id="removeMode" style="background-position: -178px 0;margin-top: -4px;"> </button>
+        <button type="button" class="button" id="lockControl" style="background-position: -226px 0;margin-top: -4px;"></button>
+        <button type="button" class="button" id="clear" style="background-position: -268px 0;margin-top: 487px;"></button><br>
+
+        <div id="zoom" style="position: absolute;width: 46px;height: 70px;top: 686px;">
+          <div class="zooms" id="zoom_in" style="background-position: 88px -134px;margin-top: -54px;"></div>
+          <div class="zooms" id="zoom_4x" style="background-position: 88px -89px;margin-top: -1px;"></div>
+          <div class="zooms" id="fill" style="background-position: 43px -89px"></div>
+        </div>
+        <div class="inputBtnSection" style="position: absolute;top: 356px;width: 90px;">
+          <label class="fileUpload">
+            <input id="uploadBtn" type="file" class="upload">
+            <span class="uploadBtn" style="background-position: -315px 0;"></span>
+          </label>
+        </div>
+
+
+        <div id="rotateUnlock" class="backgrounda" style=" position: absolute; width: 100%; height: 45px; background-position: -224px -134px; border-left:4px solid red;border-top: 1px solid grey; top: 809px; display:none;" ></div>
+        <div id="rotateLock" class="backgrounda" style=" position: absolute; width: 100%; height: 45px; background-position: -224px -134px; border-top: 1px solid grey; top: 809px;" ></div>
+        <div id="car" class="backgrounda" style=" position: absolute; width: 100%; height: 45px; background-position: -180px -134px; border-top: 1px solid grey; top: 854px;" >
+          <input type="file" id="qwea" style="opacity: 0;top: 10px;position: absolute;width: 45px;"/>
+        </div>
+        <div id="review">
+          <button type="button" class="button" id="preview1" style="background-position: -44px -133px;" onclick="speed1()"></button>
+          <button type="button" class="button" id="pause1" style="background-position: -268px -133px; display: none;"></button>
+          <button type="button" class="button" id="preview2" style="background-position: -88px -132px;margin-top: 44px;" onclick="speed2()"></button>
+          <button type="button" class="button" id="pause2" style="background-position: -268px -133px;margin-top: 44px; display: none;"></button>
+          <button type="button" class="button" id="preview3" style="background-position: -134px -134px;margin-top: -3px;" onclick="speed3()"></button>
+          <button type="button" class="button" id="pause3" style="background-position: -268px -133px;margin-top: -3px; display: none;"></button>
+          <label id="speed" style="display:none;">1</label>
+        </div>
+
+        <div id="LineColorOpenButton" style="position: absolute; top: 478px; background-position: -225px -140px; cursor: pointer; width: 45px; height: 36px;" onclick="colorShow()"></div>
+        <div id="LineCloseButton" style="position: absolute; top: 478px; background-position: -225px -140px; cursor: pointer; width: 45px; height: 36px; display: none;" onclick="colorClose()"></div>
+
+        <div id="layout" style="position: absolute; top: 400px; background-position: -268px -47px; cursor: pointer; width: 45px; height: 39px;" onclick="layoutOpen()"></div>
+        <div id="layoutClose" style="position: absolute; top: 400px; background-position: -268px -47px; cursor: pointer; width: 45px; height: 39px; display: none;" onclick="layoutClose()"></div>
+
+        <div id="layout2" style="display: none;">
+          <div id="x1" class="layouts" style="background-position: -272px -47px;top: 2px;left: 5px;"></div>
+          <div id="x2" class="layouts" style="background-position: -584px -47px;top: 35px;left: 5px;"></div>
+          <div id="x3" class="layouts" style="background-position: -228px -47px;top: 69px;left: 5px;"></div>
+          <div id="x4" class="layouts" style="background-position: -318px -47px;top: 102px;left: 5px;"></div>
+          <div id="x5" class="layouts" style="background-position: -363px -47px;top: 135px;left: 5px;"></div>
+          <div class="arrow-right" style="margin-top: -98px;"></div>
+        </div>
+
+        <div id="idk" style="position: absolute; top: 315px; background-position: -135px -90px; cursor: pointer; width: 45px; height: 42px;" onclick="idk()"></div>
+        <div id="idkClose" style="position: absolute; top: 315px; background-position: -135px -90px; cursor: pointer; width: 45px; height: 42px; display: none;" onclick="idkClose()"></div>
+
+        <div id="idk2" style="display: none;">
+          <div id="01" class="idks" style="background-position: 3px -92px;top: 2px;"></div>
+          <div id="02" class="idks" style="background-position: -443px -92px;top: 35px;"></div>
+          <div id="04" class="idks" style="background-position: -87px -92px;top: 69px;"></div>
+          <div id="05" class="idks" style="background-position: -132px -92px;top: 102px;"></div>
+          <div id="06" class="idks" style="background-position: -177px -92px;top: 135px;"></div>
+          <div id="08" class="idks" style="background-position: -222px -92px;top: 167px;"></div>
+          <div id="11" class="idks" style="background-position: -267px -92px;top: 203px;"></div>
+          <div class="arrow-right"></div>
+        </div>
+
+        <div id="LineColors" style="position: absolute; top: 478px; width: 180px; left: -180px; height: 35px; background-color: rgb(0, 153, 153); display: none;">
+          <div id="1" class="Col" style="background-position: 0px -140px;" onclick="b()"></div>
+          <div id="2" class="Col" style="background-position: -45px -140px;left: 36px;" onclick="bl()"></div>
+          <div id="3" class="Col" style="background-position: -90px -140px;left: 72px;" onclick="r()"></div>
+          <div id="4" class="Col" style="background-position: -136px -140px;left: 108px;" onclick="y()"></div>
+          <div id="5" class="Col" style="left: 144px;background-position: -182px -140px;" onclick="w()"></div>   
+          <label id="linecol" style="display: none;">1</label>
+        </div>
+
+        <div id="funcsD" class="texts" onclick="openFunc()" style=""></div>
+        <div id="funcClose" class="closeText" onclick="closeFunc()" style="display: none;"></div>
+
+      </fieldset>
+
+      <div id="col">
+        <div id="arrow1">
+          <img id="element"/>
+        </div>
+        <canvas id="paintme" width="1920" height="1080" style="width: 1920px; height:1080px; position: absolute;"></canvas>
+        <canvas id="canvas1" width="1920" height="1080"></canvas>
+      </div>
+      <div id="image_container">
+        <img id="output"/>
+      </div>
+      <div id="textCol" class="pathText" style="display:none;">
+        <p style="width: 34px; position: absolute;">Path</p>
+        <textarea id="putJS" readonly></textarea>
+      </div>
+
+      <div id="funcCol" class="pathText">
+        <p style="position:absolute; width:131px;">Animation Function</p>
+        <textarea id="functionText" readonly ></textarea>
+      </div>
+    </div>
+    <div id="fllscrn" onClick="fullScreen();"></div>
+    <script>
+      function layoutOpen() {
+        $("#layout2").show();
+        $("#layoutClose").show();
+        $("#layout").hide();
+      }
+      function layoutClose() {
+        $("#layout2").hide();
+        $("#layoutClose").hide();
+        $("#layout").show();
+      }
+      function idk() {
+        $("#idk2").show();
+        $("#idkClose").show();
+        $("#idk").hide();
+      }
+      function idkClose() {
+        $("#idk2").hide();
+        $("#idkClose").hide();
+        $("#idk").show();
+      }
+      function speed1() {
+        document.getElementById('speed').innerHTML = "1";
+      }
+      function speed2() {
+        document.getElementById('speed').innerHTML = "3";
+      }
+      function speed3() {
+        document.getElementById('speed').innerHTML = "5";
+      }
+      function b() {
+        $("#linecol").html("#000000");
+      }
+      function bl() {
+        $("#linecol").html("#3333ff");
+      }
+      function r() {
+        $("#linecol").html("#FF0000");
+      }
+      function y() {
+        $("#linecol").html("#ffff00");
+      }
+      function w() {
+        $("#linecol").html("#ffffff");
+      }
+      function colorShow() {
+        $("#LineColors").show();
+        $("#LineCloseButton").show();
+        $("#LineColorOpenButton").hide();
+      }
+      function colorClose() {
+        $("#LineColors").hide();
+        $("#LineCloseButton").hide();
+        $("#LineColorOpenButton").show();
+      }
+      function openMenu() {
+        $("#edit").show();
+        $(".menu").hide();
+      }
+      function closeMenu() {
+        $("#edit").hide();
+        $(".menu").show();
+      }
+      function openFunc() {
+        $("#funcCol").show();
+        $("#funcsD").hide();
+        $("#funcClose").show();
+      }
+      function closeFunc() {
+        $("#funcCol").hide();
+        $("#funcsD").show();
+        $("#funcClose").hide();
+      }
+    </script>
+    <script src="tweenmax/TweenMax.min.js"></script>
+    <script src="tweenmax/easing/EasePack.min.js"></script>
+    <script src="tweenmax/utils/Draggable.min.js"></script> 
+    <script src="snap.svg.js"></script>
+    <script src="jquery-3.1.0.min.js"></script>
+    <script src="grid.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
